@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      /* Two-column layout */
+      .left-column {
+        width: 50%;
+        float: left;
+      }
+      .right-column {
+        width: 50%;
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Practical Cloud Adoption
+
+---
+
+## Who
+
+### Ozzy Johnson
+
+Innovation Specialist at 18F with a focus on infrastructure and operations.
+
+### 18F
+
+A civic consultancy for the government, inside the government, enabling agencies to rapidly deploy tools and services that are easy to use, cost efficient, and reusable.
+
+???
+
+* 18 years of experience in system administration, architecture and migration.
+* Multiple projects and practices.
+
+---
+
+## Practical Cloud Adoption
+
+### 1. Service Models
+ 
+### 2. Service Models In Detail
+
+### 3. Services Working Together
+
+???
+
+
+
+---
+
+## Service Models: Defined
+
+### These [NIST definitions](http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf) are great for defining what each model is, but what does each actually mean in practice? 
+
+* **SaaS**
+<br>
+Use the provider's applications running on a cloud infrastructure.
+
+* **PaaS**
+<br>
+Deploy onto the cloud infrastructure consumer-created or acquired applications created using programming languages, libraries, services, and tools supported by the provider.
+
+* **IaaS**
+<br>
+Provision processing, storage, networks, and other fundamental computing resources.
+
+---
+
+## Service Types: In Practice
+
+### Think of each service model not in terms of what each is, but what it enables your organization to do.
+
+* **SaaS / Applications**
+<br> 
+Communication, creation, sharing and collaborating.
+
+* **PaaS / Workflow**
+<br> 
+Abstract away everything required to build and deploy software except the code.
+
+* **IaaS / Automation**
+<br>
+Manage your infrastructure as code.
+
+???
+
+* Access applications from anywhere and communicate freely across different platforms.
+  * Share with anyone, no one, a specific list or an entire organization.
+  * Integrate with other services through straightforward conventions.
+    * No firewall changes or trusts to worry about.
+* Provide your developers with a rock solid workflow.
+* Version control your data center.
+  * Test and duplicate entire stacks as easily as modules or a set of files.
+
+---
+
+## Service Types: Common Benefits
+
+### What can we expect from each model?
+
+* **Self-service**
+<br>
+The service can be started, changed and stopped by end-users without the delay and risk of errors implicit in a manual process.
+
+* **Elastic**
+<br>
+Service capacity can be rapidly increased or decreased in response to demand often automatically.
+
+* **Accessible**
+<br>
+The service offers a variety of interfaces including a responsive web console, API and CLI tools.
+
+* **Metered**
+<br>
+Granular billing for services consumed on a per user, per hour, per request basis.
+
+???
+
+* Self-service enables indepedent work and fast cycles. It's a prerequisite to automation.
+* Elasticity provides what you need when you need it without the cost of maintaining it when you don't.
+* If your 'cloud' does not offer these features it's not really a cloud.
+* Don't operate a cloud as a remote datacenter, take advantage of these features.
+
+---
+
+## Service Types: Common Considerations
+
+### What else do we look for in a useful service?
+
+* **Two-factor Authentication**
+<br>
+The ability to require a second component of authentication, most commonly a dedicated hardware device or mobile application.
+
+* **Comprehensive APIs**
+<br>
+A comprehensive API is key to automation and integration between services. Refer to the [18F API Standards](https://github.com/18F/api-standards).
+
+* **Logging**
+<br>
+Critical for incident response, conversion to metrics and trending for planning purposes.
+
+* **Compliance**
+<br>
+Ensure your standards around password complexity, authentication and billing are always met.
+
+???
+
+* Two-factor authentication is a huge improvement over basic password authentication. Strongly prefer services where it's available and enforce its use.
+* Granular API permissions are an important part of securing automation and integration with other services.
+* Be aware of the logging options available to you and take advantage of them. If you're using Amazon consider CloudTrail and CloudWatch, in Azure be aware of Azure Diagnostics. When using GitHub refer to the organization audit log.
+  * Use a log aggregator. Splunk is a popular private solution for this, but it can be very expensive, consider the ELK stack (ElasticSearch, Logstash and Kibana) as an open source alternative.
+* Enforce policies where you can, run regular reports and automate mitigation / remediation where you can't.
+
+---
+
+## Service Types: Applications / SaaS
+
+### Services we use.
+
+* **Google Apps**<br>
+Office applications, multi-mode communication and federated identity.
+
+* **GitHub**<br>
+Version Control, code sharing and collaboration, software distribution, issue tracking and automation triggers.
+
+* **New Relic**<br>
+Monitoring, alerting and dashboarding.
+
+* **Travis CI**<br>
+Continuous integration and continuous delivery.
+
+* **Slack**<br>
+Group communication and automation.
+
+???
+
+* At least a few, often many alternatives to each of these services.
+* Chosen for technical merit, wide use and support for integrations.
+
+---
+
+## Service Considerations: Applications / SaaS
+
+* ### Bulk import and export.
+* ### Integration with other services.
+* ### Data cleaning and controls.
+
+???
+
+* Being able to quickly, reliably load data into a service is essential to easing adoption. Being able to export your data later is essential to avoiding lock-in. Though, it's important to note the difference between import / export of data versus artifacts. You definitely want the former, while being the concerned with latter may signal opportunity for better processes.
+* Just as a the utility a computer increases when connected to a network with other computers. Services which seamlessly integrate with each other are more valuable than those which stand alone.
+
+---
+
+## Service Types: Workflow / PaaS
+
+### Multiple takes on the [The Twelve-Factor App](http://12factor.net/).
+
+* **Heroku (Salesforce)**<br>
+Set the standard by created the model of a modern platform service.
+
+* **App Engine (Google)**<br>
+Straightforward integration to the larger selection of Google services.<br>
+
+* **Azure (Microsoft)**<br>
+Private option. Some specific support for building mobile app infrastructure.<br>
+
+* **Cloud Foundry (Pivotal)**<br>
+Flexible private option. Open source. Multiple public options.<br>
+
+???
+
+* The choice of which platform to use is a smaller concern than choosing to use a platform in the first place. A platform is unlikely to serve every case for an existing organization so consider the adjacent services offered by a provider. These virtual machines, databases and networking services will fill in the gaps and provide supporting services for platform apps.
+
+---
+
+## Service Considerations: Workflow / PaaS
+
+* ### Supported languages.
+* ### Refactoring for the platform.
+* ### Public versus private tradeoffs.
+
+???
+
+* Typical languages supported include: Java, .NET, Python, PHP, Go, Ruby, Node, Docker Images
+* Using a platform is about simplifying your workflow by constraining yourself to the conventions of the platform. There are necessary trade-offs which are common across platforms.
+* The level of support for a given language can vary between platforms. You may be restricted to using only the standard library in some cases.
+* A traditional application will not necessarily convert easily to the stateless, twelve-factor style typical of a platform service.
+* The private options available for some platform services is another set of tradeoffs where you'll need to consider: 
+  * Weigh added control against added responsibility for platform availability and surface area.
+  * Consider the cost of operating the underlying infrastructure and providing support.
+
+
+---
+
+## Service Types: Automation / IaaS
+
+### Multiple full-featured options.
+
+* **Amazon Web Services**<br>
+Market leader offering dozens of services.
+
+* **Microsoft Azure**<br>
+Strong contender, private and public options.
+
+* **Google Compute Engine**<br>
+Innovative features, fast-growing.
+
+???
+
+* There are many other players, but given the option of more than one full-featured provider they're becoming harder to justify. That's not to say that other providers don't have a place, just that the features and benefits are more specific.
+* Common benefits and baseline expectations include: Multi-platform virtual machines, relational and non-relational database services, object storage, load balancing, private networking, direct connect and stack deployment tools.
+* Lock-in is an overstated concern when using a cloud provider. 
+  * By using configuration management and deployment tools which are provider agnostic you will always be able to rapidly rebuild your systems elsewhere.
+  * By separating application code from configuration you can more easily redeploy your applications across multiple environments.
+
+---
+
+## Service Considerations: Automation / IaaS
+
+.left-column[
+* ### True Self-service
+* ### Right-sizing
+* ### Pricing Models
+* ### Direct Connect
+]
+
+.right-column[
+* ### Service Regions
+* ### Portable Configuration
+* ### Access Controls
+* ### Service Features
+]
+???
+
+* Beware if a provider requires a phone call or has a lead time for initial setup or service changes. This is a red flag for a service which is not automated and may not operate as quickly or reliably as you expect.
+* Understand the load patterns of your existing systems before migrating them to a cloud service. Buying 1:1 capacity from a cloud provider will likely cost more than you're anticipating. 
+  * Providers offer a range of instance types appropriate for compute, memory or I/O heavy tasks. 
+  * Some offer burstable instances which allow for short bursts of high-performance at low cost.
+* Consider how services are billed. 
+  * Can you save by reserving capacity? 
+  * Will using a provider services save on licensing commercial software? 
+* If you intend to use a direct connect service, understand who the provider co-locates with and what it will take establish a presence there. Alternatively, understand the provider's options for virtual private networking.
+* Regions completely independent, zones are isolated environments within a region. Know where the providers services regions are, how they're subdivided and what if any shared dependencies are in place. This is a critically important aspect of successfully using a cloud service. 
+  * Each application you run should be fault tolerant within a region and potentially across regions.
+  * Understand that a cloud service provider will have outages and you will need to architect your applications around that fact.
+  * There have been multiple high-profile failures where one Amazon using customer goes offline while others who have architected around failure get by unscathed.
+* Where possible, build with platform agnostic tools to keep your configuration portable. Don't worry about migrating your environments to a new platform, redeploy them.
+* Understand the access controls available with your platform. A cloud environment may look very different what you're used to on premise. The best way to delegate may be to create an entirely separate/subordinate account.
+* Platforms are not created equal. There's much more to a full-featured IaaS than being able to deploy VMs.
+---
+
+## Services Working Together
+
+* ### The value of an automated system is far greater than the sum of its parts.
+* ### Concern yourself with the interfaces options available from services, not the specific implementation of each.
+* ### Practice defense in-depth.
+
+???
+
+* Each service is useful on its own, but the automated workflow is truly powerful. It reduces the opportunity for human error while implicitly tracking changes.
+* When considering a diagram of your architecture, it's not what's in the box that matters, but the lines between them. The city planner is a good analogy. Zone an area of your architecture for a particular service model or role rather than a specific solution. Ideally, each role remains easily interchangeable with an alternative.
+* Use two-factor wherever it's available. 
+* Protect your resources with VPCs and network ACLs.
+* Protect your data by controlling access to the host, bucket or database where it is stored.
+  * Where data is particularly sensitive encrypt individual fields or files.
+  * Consider federated authentication.
+* Use common tools to quickly generate complex, secure keys and passwords. 
+* Where the platform does not provide security or it can be augmented, implement your own.
+
+---
+
+## Services Working Together
+
+### Application Development:
+
+1. Create a local virtual environment with Vagrant (OSS), Ansible (OSS) and Virtualbox (OSS).
+1. Create a cloud virtual environment with Vagrant using the same scripts.
+1. Commit code to GitHub (SaaS).
+  * Notifies image build server running on Amazon (IaaS).
+1. Image build server creates a new Amazon AMI using Packer (OSS).
+  * Updates Amazon CloudFormation stack using Amazon IAM Role permissions.
+1. CloudFormation performs a rolling update.
+  * Relaunches one instance at a time until all instances have been updated.
+
+Uses Open source tools which access the self-service API. The resulting automation uses the role-based access permissions and native deployment tools of a full-featured provider.
+
+???
+
+* With a local environment, the developer is able to work offline and iterate quickly, but the build is portable and repeatable for sharing with other devs.
+* The cloud environment is codified and repeatable.
+---
+
+## Services Working Together
+
+### Application Deployment:
+
+1. Code is committed to GitHub (SaaS). 
+  * Notifies staff via Slack (SaaS).
+  * Notifies Travis-CI (SaaS).
+1. Travis-CI pulls the code from GitHub. 
+  * Runs a suite of tests and broadcasts the results to Slack. 
+  * Pushes the build into Cloud Foundry (PaaS) running on top of Amazon (IaaS).
+1. Cloud Foundry builds and starts the application.
+  * Pulls additional dependencies from GitHub and Amazon S3.
+  * Sends sanitized metrics to New Relic (SaaS).
+
+This entire process features just one manual step, an initial push. Each component could be swapped out for an alternative with minor changes.
+
+???
+
+* All about automation.
+
+---
+
+## Final Thoughts
+
+* ### Cloud adoption is not a silver-bullet, using any service effectively requires understanding inherent tradeoffs.
+* ### [The Practice of Cloud System Administration](http://www.amazon.com/dp/032194318X) is an excellent high-level overview.
+* ### Nearly every service mentioned today has free or low cost options to get started.
+
+???
+
+* Also:
+  * Automate and version control everything.
+  * Don't forklift hoping for a quick win.
+---
+
+# Resources:
+
+* [18F API Standards](https://github.com/18F/api-standards)
+* [AWS - Amazon Web Services](http://aws.amazon.com/)
+* [AWS - CloudFormation](http://aws.amazon.com/cloudformation/)
+* [CLI - Command-line interface](https://en.wikipedia.org/wiki/Command-line_interface)
+* [Cloud Foundry Community](http://cloudfoundry.org/index.html)
+* [Elasticity](https://en.wikipedia.org/wiki/Elasticity_%28cloud_computing%29)
+* [GitHub](https://github.com/)
+* [Google App Engine](https://cloud.google.com/appengine/)
+* [Google Apps](https://www.google.com/work/apps/business/)
+* [Google Compute Engine](https://cloud.google.com/compute/)
+* [Heroku](https://www.heroku.com/)
+* [Microsoft Azure](http://azure.microsoft.com/)
+* [New Relic](http://newrelic.com/)
+* [Packer](https://www.packer.io/)
+* [Slack](https://slack.com/)
+* [The NIST Definition of Cloud Computing](http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf)
+* [The Practice of Cloud System Administration](http://www.amazon.com/dp/032194318X)
+* [The Twelve-Factor App](http://12factor.net/)
+* [Travis-CI](https://travis-ci.com/)
+* [Two-factor Authentication](https://en.wikipedia.org/wiki/Two-factor_authentication)
+* [Vagrant](https://www.vagrantup.com/)
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
